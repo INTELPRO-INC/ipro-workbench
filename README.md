@@ -7,7 +7,7 @@ console.
 | System | 0.1.0 (Preview) |
 |---|---|
 | macOS, Apple silicon, macOS 12 or later | [`IPRO-Workbench-0.1.0-mac-arm64.dmg`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.0/IPRO-Workbench-0.1.0-mac-arm64.dmg) (199 MB) |
-| Windows 10 / 11, x64 | [`IPRO-Workbench-0.1.0-win-x64.exe`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.0/IPRO-Workbench-0.1.0-win-x64.exe) (160 MB) |
+| Windows 11, x64 | [`IPRO-Workbench-0.1.0-win-x64.exe`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.0/IPRO-Workbench-0.1.0-win-x64.exe) (160 MB) |
 | Linux | not available yet |
 
 0.1.0 is a preview: the installers are not signed by Apple or Microsoft, so the first start needs one
@@ -122,7 +122,7 @@ app's `plugins` folder.
 
 IPRO Workbench 是 INTELPRO IPRO7、IPRO7AI、IPRO6S 的開發環境，以 Eclipse Theia 為基礎：補齊 SDK 與工具、
 建立與建置應用程式、燒錄開發板、看序列埠輸出，都在同一個桌面程式裡。0.1.0 是預覽版，提供 macOS（Apple
-silicon，macOS 12 以上）與 Windows 10／11 x64；Linux 版尚未提供。
+silicon，macOS 12 以上）與 Windows 11 x64；Linux 版尚未提供。
 
 安裝時照上面各系統的步驟：下載、核對 SHA-256、安裝。安裝檔沒有 Apple 或 Microsoft 簽章：macOS 用瀏覽器下載時，
 第一次開啟要到「系統設定 → 隱私權與安全性」按「仍要打開」；Windows 的 SmartScreen 按「其他資訊 → 仍要執行」。
