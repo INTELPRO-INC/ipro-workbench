@@ -10,7 +10,7 @@ console.
 | Windows 11, x64 | [`IPRO-Workbench-0.1.1-win-x64.exe`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-0.1.1-win-x64.exe) (160 MB) |
 | Linux | not available yet |
 
-Operation manual, every feature step by step: [English](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.1-en.pdf) (53 pages, 8.5 MB) · [Traditional Chinese](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.1-zh-TW.pdf) (52 pages, 8.7 MB).
+Operation manual, every feature step by step: [English](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-en.pdf) (73 pages, 10.8 MB) · [Traditional Chinese](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf) (67 pages, 11.0 MB).
 
 0.1.1 is a preview: the installers are not signed by Apple or Microsoft, so the first start needs one
 extra step (below).
@@ -108,8 +108,6 @@ command palette (⇧⌘P / Ctrl+Shift+P) and run **Configure Display Language**.
 - Wi-Fi Throughput (iperf): the board's network name and password cannot contain spaces, and the board
   echoes the password in the monitor. When the board sends to a Windows PC, the firewall must allow
   incoming TCP port 5001.
-- The operation manual was written for 0.1.0: it does not cover the IPRO6S EVK, the Wi-Fi throughput
-  test or the GATT configurator yet.
 
 ## Updates
 
@@ -132,7 +130,7 @@ silicon，macOS 12 以上）與 Windows 11 x64；Linux 版尚未提供。
 安裝時照上面各系統的步驟：下載、核對 SHA-256、安裝。安裝檔沒有 Apple 或 Microsoft 簽章：macOS 用瀏覽器下載時，
 第一次開啟要到「系統設定 → 隱私權與安全性」按「仍要打開」；Windows 的 SmartScreen 按「其他資訊 → 仍要執行」。
 第一次使用：按首頁的「補齊環境」安裝工具，「開啟 SDK…」或「從 GitHub 安裝 SDK…」，接上除錯探棒與開發板，
-選 `ipro_unit_test` 按「建置、燒錄並監看」。介面跟著系統語言，系統是繁體中文時就是中文介面。每項功能的逐步操作見[操作手冊](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.1-zh-TW.pdf)（PDF）。
+選 `ipro_unit_test` 按「建置、燒錄並監看」。介面跟著系統語言，系統是繁體中文時就是中文介面。每項功能的逐步操作見[操作手冊](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf)（PDF）。
 
 ## Related
 
