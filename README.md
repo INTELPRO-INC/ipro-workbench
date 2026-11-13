@@ -4,27 +4,30 @@ The development environment for INTELPRO IPRO7, IPRO7AI and IPRO6S, built on Ecl
 app sets up the SDK and tools, creates and builds applications, flashes the board and shows its serial
 console.
 
-| System | 0.1.1 (Preview) |
+| System | 0.2.0 (Preview) |
 |---|---|
-| macOS, Apple silicon, macOS 12 or later | [`IPRO-Workbench-0.1.1-mac-arm64.dmg`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-0.1.1-mac-arm64.dmg) (199 MB) |
-| Windows 11, x64 | [`IPRO-Workbench-0.1.1-win-x64.exe`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-0.1.1-win-x64.exe) (160 MB) |
+| macOS, Apple silicon, macOS 12 or later | [`IPRO-Workbench-0.2.0-mac-arm64.dmg`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-0.2.0-mac-arm64.dmg) (201 MB) |
+| Windows 11, x64 | [`IPRO-Workbench-0.2.0-win-x64.exe`](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-0.2.0-win-x64.exe) (161 MB) |
 | Linux | not available yet |
 
-Operation manual, every feature step by step: [English](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-en.pdf) (73 pages, 10.8 MB) · [Traditional Chinese](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf) (67 pages, 11.0 MB).
+Operation manual V1.2, written for 0.1.1 (a manual for 0.2.0 follows): [English](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-Operation-Manual-V1.2-en.pdf) (73 pages, 10.8 MB) · [Traditional Chinese](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf) (67 pages, 11.0 MB).
 
-0.1.1 is a preview: the installers are not signed by Apple or Microsoft, so the first start needs one
+0.2.0 is a preview: the installers are not signed by Apple or Microsoft, so the first start needs one
 extra step (below).
 
 ## What it does
 
 - **Setup**: checks the IPRO SDK, RISC-V toolchain, CMake / Ninja / Python, IntelProCube and OpenOCD, and
   installs what is missing from INTELPRO's GitHub releases with one button.
-- **Applications**: lists the SDK's applications, creates new ones from templates, and builds, flashes and
-  monitors with one command.
-- **Board tools**: serial monitor with filter, timestamps, log and plotter; Kconfig settings editor; pin
+- **Applications**: lists the SDK's applications and their configurations (`defconfig_*`), creates new
+  ones from templates, and builds, flashes and monitors with one command. Boards are flashed through the IPRO
+  Debug Probe, or on macOS over their own USB (boot2's USB downloader).
+- **OTA**: makes the OTA package of an application and sends it to the board over its console UART.
+- **Board tools**: serial monitor with filter, timestamps, log and plotter; a sensor dashboard laid out by
+  the application's `dashboard.yaml`; Kconfig settings editor; pin
   configurator; partition table; memory map and size budget; crash decoding; register reference.
-- **Tests and measurement**: runs the SDK's on-board tests, flashes AI models, BLE DTM RF tests, power
-  measurement with a Nordic PPK2.
+- **Tests and measurement**: runs the SDK's on-board tests, flashes AI models, BLE DTM RF tests, Wi-Fi
+  scan and iperf, power measurement with a Nordic PPK2.
 - **AI**: an MCP server, so AI coding assistants can build, flash and read test results through the IDE.
 
 ## Install on macOS
@@ -32,18 +35,20 @@ extra step (below).
 1. Download the DMG and check it. In Terminal:
 
    ```bash
-   curl -LO https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-0.1.1-mac-arm64.dmg
-   shasum -a 256 IPRO-Workbench-0.1.1-mac-arm64.dmg
+   curl -LO https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-0.2.0-mac-arm64.dmg
+   shasum -a 256 IPRO-Workbench-0.2.0-mac-arm64.dmg
    ```
 
-   You should see `fb6980af59e4021ebd7357d3da1721a1490e2cec7446a98425b6c9ba0e25959e`.
+   You should see `0c2e4391d3cefbd8906c07ab65554a8f5a4812baa44ee67356ed51e4262c0cb7`.
 
-2. Copy the app to Applications and start it:
+2. Copy the app to Applications and start it. If an older version is in Applications, quit it first; the
+   `rm` line removes it so no file of the old version stays behind:
 
    ```bash
-   hdiutil attach IPRO-Workbench-0.1.1-mac-arm64.dmg
-   cp -R "/Volumes/IPRO Workbench 0.1.1-arm64/IPRO Workbench.app" /Applications/
-   hdiutil detach "/Volumes/IPRO Workbench 0.1.1-arm64"
+   rm -rf "/Applications/IPRO Workbench.app"
+   hdiutil attach IPRO-Workbench-0.2.0-mac-arm64.dmg
+   cp -R "/Volumes/IPRO Workbench 0.2.0-arm64/IPRO Workbench.app" /Applications/
+   hdiutil detach "/Volumes/IPRO Workbench 0.2.0-arm64"
    open "/Applications/IPRO Workbench.app"
    ```
 
@@ -59,19 +64,19 @@ check the app the first time. Open **System Settings → Privacy & Security**, f
 1. Download the installer and check it. In PowerShell, in the download folder:
 
    ```powershell
-   (Get-FileHash .\IPRO-Workbench-0.1.1-win-x64.exe -Algorithm SHA256).Hash
+   (Get-FileHash .\IPRO-Workbench-0.2.0-win-x64.exe -Algorithm SHA256).Hash
    ```
 
-   You should see `E057FB56C15CB68CDFEB8C60B0CFECD7F5BD82860573003AD2D94788A34AA74C`.
+   You should see `5D3643D1D346AE68B0B53AC608B758F3BFF2BCA7136B18CF00A4E351AAA9FB2A`.
 
-2. Run `IPRO-Workbench-0.1.1-win-x64.exe`. When Windows SmartScreen says "Windows protected your PC",
+2. Run `IPRO-Workbench-0.2.0-win-x64.exe`. When Windows SmartScreen says "Windows protected your PC",
    click **More info**, then **Run anyway**. Pick the folder and finish the installer.
 3. Start **IPRO Workbench** from the Start menu.
 
    You should see the IPRO Workbench window with **IPRO Home** in the middle and the IPRO side bar on the
    left.
 
-To install without the wizard, run `.\IPRO-Workbench-0.1.1-win-x64.exe /S /D=C:\IPRO\Workbench`.
+To install without the wizard, run `.\IPRO-Workbench-0.2.0-win-x64.exe /S /D=C:\IPRO\Workbench`.
 
 ## First run
 
@@ -95,16 +100,20 @@ To install without the wizard, run `.\IPRO-Workbench-0.1.1-win-x64.exe /S /D=C:\
    You should see the build in the **IPRO Build** output, ending with the flash and RAM usage,
    `[All Success]` in **IPRO Flash**, and `ALL TESTS PASSED` in the **IPRO Monitor** terminal.
 
-The interface follows the system language (English or Traditional Chinese). To change it, open the
+The interface follows the system language (English, Traditional Chinese, Simplified Chinese or
+Japanese). To change it, open the
 command palette (⇧⌘P / Ctrl+Shift+P) and run **Configure Display Language**.
 
-## Known limitations in 0.1.1
+## Known limitations in 0.2.0
 
 - Not signed by Apple (not notarized) or Microsoft; see the install steps for the first start.
 - JTAG debugging is not ready yet.
 - Automatic updates are off (`updates.checkForUpdates`); install new versions from this page.
-- IPRO6 boards print no build stamp or partition table at boot, so the board view cannot tell which
-  firmware runs and the partition table is not compared with the board's.
+- IPRO6 boards print no partition table at boot, so it is not compared with the board's. They print the
+  build stamp the board view uses from IPRO SDK V2.3.0 on.
+- Flashing over a board's own USB (boot2's USB downloader) is macOS only; on Windows use the IPRO Debug Probe.
+- On Windows, build the IPRO SDK with the RISC-V toolchain 14.2.1 (what **Fix Environment** installs);
+  13.1.1 cannot link the SDK's prebuilt libraries.
 - Wi-Fi Throughput (iperf): the board's network name and password cannot contain spaces, and the board
   echoes the password in the monitor. When the board sends to a Windows PC, the firewall must allow
   incoming TCP port 5001.
@@ -124,13 +133,13 @@ app's `plugins` folder.
 ## 繁體中文
 
 IPRO Workbench 是 INTELPRO IPRO7、IPRO7AI、IPRO6S 的開發環境，以 Eclipse Theia 為基礎：補齊 SDK 與工具、
-建立與建置應用程式、燒錄開發板、看序列埠輸出，都在同一個桌面程式裡。0.1.1 是預覽版，提供 macOS（Apple
+建立與建置應用程式、燒錄開發板、看序列埠輸出，都在同一個桌面程式裡。0.2.0 是預覽版，提供 macOS（Apple
 silicon，macOS 12 以上）與 Windows 11 x64；Linux 版尚未提供。
 
 安裝時照上面各系統的步驟：下載、核對 SHA-256、安裝。安裝檔沒有 Apple 或 Microsoft 簽章：macOS 用瀏覽器下載時，
 第一次開啟要到「系統設定 → 隱私權與安全性」按「仍要打開」；Windows 的 SmartScreen 按「其他資訊 → 仍要執行」。
 第一次使用：按首頁的「補齊環境」安裝工具，「開啟 SDK…」或「從 GitHub 安裝 SDK…」，接上除錯探棒與開發板，
-選 `ipro_unit_test` 按「建置、燒錄並監看」。介面跟著系統語言，系統是繁體中文時就是中文介面。每項功能的逐步操作見[操作手冊](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.1.1/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf)（PDF）。
+選 `ipro_unit_test` 按「建置、燒錄並監看」。介面跟著系統語言（英文、繁體中文、簡體中文、日文），系統是繁體中文時就是繁體中文介面。每項功能的逐步操作見[操作手冊](https://github.com/INTELPRO-INC/ipro-workbench/releases/download/v0.2.0/IPRO-Workbench-Operation-Manual-V1.2-zh-TW.pdf)（PDF）。
 
 ## Related
 
